@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_page.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/HomeScreenAdmin.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/global_name.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/HomeScreenPatient.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -245,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(),
+              builder: (context) => HomeScreenPatient(),
             ),
           );
         }

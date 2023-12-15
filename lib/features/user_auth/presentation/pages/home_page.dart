@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/login_page.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../global/common/toast.dart';
@@ -13,6 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String nama = '';
+  String complaint = '';
+  String history = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -27,18 +31,12 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Center(
-                child: Text(
-              "Welcome Home Patient!",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-            )),
-            SizedBox(
-              height: 30,
-            ),
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('complaint_history')
+                  .collection("complaint_history")
+                  .orderBy("uid")
                   .where('uid', isEqualTo: currentUser.currentUser!.uid)
+                  .limit(1) // Memuat hanya satu dokumen (data terakhir)
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -55,16 +53,14 @@ class _HomePageState extends State<HomePage> {
                   if (clients != null) {
                     for (var complaintHistory in clients) {
                       // Ubah bagian ini sesuai dengan struktur data di Firestore Anda
-                      String complaint = complaintHistory['complaint'];
-                      String history = complaintHistory['history'];
-                      String nama = complaintHistory['nama'];
+                      complaint = complaintHistory['complaint'];
+                      history = complaintHistory['history'];
+                      nama = complaintHistory['nama'];
 
                       // Tambahkan widget ke dalam list clientWidgets
                       clientWidgets.add(Column(
                         children: [
                           Text(complaint),
-                          Text(history),
-                          Text(nama),
                         ],
                       ));
                     }
@@ -76,8 +72,35 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               },
+            ),
+            Center(
+                child: Text(
+              "Welcome Home $nama",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+            )),
+            SizedBox(
+              height: 30,
+            ),
+            IconButton(
+              onPressed: () {
+                logout(context);
+              },
+              icon: Icon(
+                Icons.logout,
+              ),
             )
           ],
         ));
+  }
+
+  Future<void> logout(BuildContext context) async {
+    CircularProgressIndicator();
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(),
+      ),
+    );
   }
 }

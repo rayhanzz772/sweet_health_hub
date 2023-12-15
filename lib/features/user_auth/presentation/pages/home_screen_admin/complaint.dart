@@ -22,6 +22,7 @@ class _ComplaintState extends State<Complaint> {
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
   final TextEditingController nama = new TextEditingController();
+  final TextEditingController checkid = new TextEditingController();
   final TextEditingController patientcomplaint = new TextEditingController();
   final TextEditingController patienthistory = new TextEditingController();
 
@@ -59,8 +60,11 @@ class _ComplaintState extends State<Complaint> {
               }
             },
           ),
+          SizedBox(
+            height: 50,
+          ),
           Container(
-            margin: EdgeInsets.only(top: 40),
+            margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.all(0),
             // decoration: BoxDecoration(
             //   border: Border.all(color: Color.fromARGB(255, 0, 0, 0), width: 1),
@@ -95,27 +99,22 @@ class _ComplaintState extends State<Complaint> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nama Pasien :",
+                    "Check ID",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   SizedBox(
                     // <-- TextField height
                     child: TextFormField(
-                      controller: nama,
-                      keyboardType: TextInputType.multiline,
+                      controller: checkid,
+                      maxLines: null,
                       decoration: InputDecoration(
                         fillColor: Color(0xffF4F1DA),
                         filled: true,
-                        hintText: 'Nama Pasien',
-                        border: OutlineInputBorder(
-                          // Atur border menjadi InputBorder.none
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
+                        hintText: 'Enter a check id',
                       ),
                       onSaved: (value) {
-                        nama.text = value!;
+                        checkid.text = value!;
                       },
                       onChanged: (value) {},
                     ),
@@ -123,6 +122,10 @@ class _ComplaintState extends State<Complaint> {
                   SizedBox(
                     height: 15,
                   ),
+                  // PATIENT COMPLAINT
+                  //
+                  //
+
                   Text(
                     "Patient Complaint",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -208,8 +211,8 @@ class _ComplaintState extends State<Complaint> {
                           setState(() {
                             showProgress = true;
                           });
-                          addDataToFirestore(nama.text, patientcomplaint.text,
-                              patienthistory.text, uid);
+                          addDataToFirestore(namaBaru, patientcomplaint.text,
+                              patienthistory.text, uid, checkid.text);
                         },
                         child: Text(
                           "Save",
@@ -231,8 +234,8 @@ class _ComplaintState extends State<Complaint> {
     ));
   }
 
-  void addDataToFirestore(
-      String username, String complaint, String history, String uid) async {
+  void addDataToFirestore(String username, String complaint, String history,
+      String uid, String checkid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     CollectionReference ref = firebaseFirestore.collection('complaint_history');
 
@@ -240,7 +243,8 @@ class _ComplaintState extends State<Complaint> {
       'nama': username,
       'complaint': complaint,
       'history': history,
-      'uid': uid
+      'uid': uid,
+      'checkid': checkid
       // Tambahkan field lain yang ingin Anda tambahkan di sini
     }).then((value) {
       print('Data added successfully!');
