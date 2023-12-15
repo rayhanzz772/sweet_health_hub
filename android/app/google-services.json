@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "239352649397",
+    "project_id": "doctornotes-dd168",
+    "storage_bucket": "doctornotes-dd168.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239352649397:android:71ea41d41ac6209acc50fc",
+        "android_client_info": {
+          "package_name": "com.example.doctornotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgdAde2I0hYsUVLx3J0u2XtNYCui6Vd6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
