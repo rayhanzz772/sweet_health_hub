@@ -94,14 +94,14 @@ class _CheckUpPatientState extends State<CheckUpPatient> {
                             child: Row(
                               children: [
                                 Image.asset(
-                                  "assets/images/complaint.png",
+                                  "assets/images/checkup.png",
                                   width: 40,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "COMPLAINT",
+                                  "CHECK UP",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
@@ -171,7 +171,7 @@ class _CheckUpPatientState extends State<CheckUpPatient> {
                                     enabled: false,
                                     maxLines: null,
                                     decoration: InputDecoration(
-                                      fillColor: merah,
+                                      fillColor: biru,
                                       filled: true,
                                       hintText: '$pulse',
                                     ),
@@ -200,7 +200,7 @@ class _CheckUpPatientState extends State<CheckUpPatient> {
                                     enabled: false,
                                     maxLines: null,
                                     decoration: InputDecoration(
-                                      fillColor: merah,
+                                      fillColor: kuning,
                                       filled: true,
                                       hintText: '$respirasi',
                                     ),
@@ -229,7 +229,7 @@ class _CheckUpPatientState extends State<CheckUpPatient> {
                                     enabled: false,
                                     maxLines: null,
                                     decoration: InputDecoration(
-                                      fillColor: merah,
+                                      fillColor: pink,
                                       filled: true,
                                       hintText: '$temperature',
                                     ),

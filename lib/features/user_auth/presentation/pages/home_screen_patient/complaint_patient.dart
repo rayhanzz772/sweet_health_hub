@@ -37,35 +37,6 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      if (globalid == globalid) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Alert Dialog Title'),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text('This is a demo alert dialog.'),
-                    Text('Would you like to approve of this message?'),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
-      // Tampilkan AlertDialog pada saat aplikasi dijalankan
-    });
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(

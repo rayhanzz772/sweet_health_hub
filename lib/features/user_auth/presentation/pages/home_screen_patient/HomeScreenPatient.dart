@@ -235,113 +235,108 @@ class _Patient extends State<MyForm> {
 
                       Container(
                         padding: EdgeInsets.only(left: 18, right: 18, top: 10),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: checkidcontroller,
-                              decoration: InputDecoration(
-                                fillColor: Color(0xffF4F1DA),
-                                filled: true,
-                                hintText: 'Masukan Check id',
-                                contentPadding: const EdgeInsets.only(
-                                    left: 14.0, bottom: 8.0, top: 8.0),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: new BorderSide(
-                                      color: const Color.fromARGB(
-                                          255, 50, 50, 50)),
-                                  borderRadius: new BorderRadius.circular(10),
+                        child: Container(
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: checkidcontroller,
+                                    decoration: InputDecoration(
+                                      fillColor: Color(0xffF4F1DA),
+                                      filled: true,
+                                      hintText: 'Masukan Check id',
+                                      contentPadding: const EdgeInsets.only(
+                                          left: 14.0, bottom: 8.0, top: 8.0),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 255, 245, 98)),
+                                        borderRadius:
+                                            new BorderRadius.circular(10),
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: new BorderSide(
+                                            color: const Color.fromARGB(
+                                                255, 186, 186, 186)),
+                                        borderRadius:
+                                            new BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: new BorderSide(color: kuning),
-                                  borderRadius: new BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                              ),
-                              elevation: 0,
-                              height: 40,
-                              onPressed: () {
-                                setState(() {
-                                  globalid = checkidcontroller.text;
-                                });
-                                if (globalid == '$checkiddatabase') {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("Cek ID Tersimpan"),
-                                        content: Text("ID telah tersimpan."),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text("OK"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
+                                SizedBox(
+                                    width:
+                                        10), // Spasi antara TextField dan tombol
+                                MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  elevation: 0,
+                                  height: 40,
+                                  onPressed: () {
+                                    setState(() {
+                                      globalid = checkidcontroller.text;
+                                    });
+                                    if (globalid == '$checkiddatabase') {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Cek ID Tersimpan"),
+                                            content:
+                                                Text("ID telah tersimpan."),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text("OK"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
-                                    },
-                                  );
-                                  idEntered = true;
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text("ERROR"),
-                                        content: Text(
-                                            "DATA TIDAK ADA ATAU KADALUARSA"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: Text("OK"),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
+                                      idEntered = true;
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("ERROR"),
+                                            content: Text(
+                                                "DATA TIDAK ADA ATAU KADALUARSA"),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text("OK"),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       );
-                                    },
-                                  );
-                                  idEntered = false;
-                                }
-                              },
-                              color: hijau,
-                              child: Text(
-                                "Save",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
+                                      idEntered = false;
+                                    }
+                                  },
+                                  color: hijau,
+                                  child: Text(
+                                    "Save",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            SizedBox(
-                                height: 10), // Spasi sebelum pesan "tersimpan"
-                          ],
+                          ),
                         ),
                       ),
-
-                      Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              width: kWidth2,
-                              // decoration: BoxDecoration(
-                              //     border: Border.all(
-                              //         color: Colors.green, width: 1),),
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Column(
-                                children: [],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      SizedBox(height: 30),
 
                       Container(
                         // decoration: BoxDecoration(
@@ -367,7 +362,26 @@ class _Patient extends State<MyForm> {
                                                     ComplaintPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
                                           );
                                         }
-                                      : null,
+                                      : () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Pesan'),
+                                                content: Text(
+                                                    'ISI CHECK ID TERLEBIH DAHULU.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Tutup'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
                                   child: Row(
                                     children: [
                                       Container(
@@ -440,7 +454,26 @@ class _Patient extends State<MyForm> {
                                                     CheckUpPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
                                           );
                                         }
-                                      : null,
+                                      : () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Pesan'),
+                                                content: Text(
+                                                    'ISI CHECK ID TERLEBIH DAHULU.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Tutup'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
                                   child: Row(
                                     children: [
                                       Container(
@@ -535,7 +568,26 @@ class _Patient extends State<MyForm> {
                                                     DiagnosisPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
                                           );
                                         }
-                                      : null,
+                                      : () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Pesan'),
+                                                content: Text(
+                                                    'ISI CHECK ID TERLEBIH DAHULU.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Tutup'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
                                   child: Row(
                                     children: [
                                       Container(
@@ -608,7 +660,26 @@ class _Patient extends State<MyForm> {
                                                     PrescriptionPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
                                           );
                                         }
-                                      : null,
+                                      : () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('Pesan'),
+                                                content: Text(
+                                                    'ISI CHECK ID TERLEBIH DAHULU.'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Tutup'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
                                   child: Row(
                                     children: [
                                       Container(
