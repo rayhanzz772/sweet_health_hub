@@ -7,14 +7,14 @@ import 'package:flutter_firebase/features/user_auth/presentation/pages/home_scre
 import 'global_name.dart'; // Mengimpor file globals.dart
 // import '/../../../../global/common/toast.dart';
 
-class Complaint extends StatefulWidget {
-  const Complaint({super.key});
+class Diagnosis extends StatefulWidget {
+  const Diagnosis({super.key});
 
   @override
-  State<Complaint> createState() => _ComplaintState();
+  State<Diagnosis> createState() => _DiagnosisState();
 }
 
-class _ComplaintState extends State<Complaint> {
+class _DiagnosisState extends State<Diagnosis> {
   String namaBaru = globalName;
   bool showProgress = false;
   bool visible = false;
@@ -23,8 +23,7 @@ class _ComplaintState extends State<Complaint> {
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
   final TextEditingController nama = new TextEditingController();
-  final TextEditingController patientcomplaint = new TextEditingController();
-  final TextEditingController patienthistory = new TextEditingController();
+  final TextEditingController diagnosis = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,7 @@ class _ComplaintState extends State<Complaint> {
               child: Row(
                 children: [
                   Image.asset(
-                    "assets/images/complaint.png",
+                    "assets/images/diagnosis.png",
                     width: 40,
                   ),
                   SizedBox(
@@ -89,7 +88,7 @@ class _ComplaintState extends State<Complaint> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 18, right: 18, top: 25),
+            padding: EdgeInsets.only(left: 18, right: 18, top: 65),
             // decoration: BoxDecoration(
             //   border: Border.all(color: Color.fromARGB(255, 0, 0, 0), width: 1),
             // ),
@@ -103,58 +102,30 @@ class _ComplaintState extends State<Complaint> {
                   //
 
                   Text(
-                    "Patient Complaint",
+                    "Patient Diagnosis",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   SizedBox(
-                    height: 200,
+                    height: 300,
                     // <-- TextField height
                     child: TextFormField(
-                      controller: patientcomplaint,
+                      controller: diagnosis,
                       maxLines: null,
                       expands: true,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
-                        fillColor: kuning,
+                        fillColor: biru,
                         filled: true,
                         hintText: 'Enter a message',
                       ),
                       onSaved: (value) {
-                        patientcomplaint.text = value!;
+                        diagnosis.text = value!;
                       },
                       onChanged: (value) {},
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Patient History",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      height: 200, // <-- TextField height
-                      child: TextFormField(
-                        controller: patienthistory,
-                        maxLines: null,
-                        expands: true,
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          fillColor: kuning,
-                          filled: true,
-                          hintText: 'Enter a message',
-                        ),
-                        onSaved: (value) {
-                          patienthistory.text = value!;
-                        },
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ),
+
                   SizedBox(
                     height: 30,
                   ),
@@ -187,8 +158,8 @@ class _ComplaintState extends State<Complaint> {
                           setState(() {
                             showProgress = true;
                           });
-                          addDataToFirestore(namaBaru, patientcomplaint.text,
-                              patienthistory.text, uid, checkid);
+                          addDataToFirestore(
+                              namaBaru, diagnosis.text, uid, checkid);
                         },
                         child: Text(
                           "Save",
@@ -210,15 +181,14 @@ class _ComplaintState extends State<Complaint> {
     ));
   }
 
-  void addDataToFirestore(String username, String complaint, String history,
-      String uid, String checkid) async {
+  void addDataToFirestore(
+      String username, String diagnosis, String uid, String checkid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    CollectionReference ref = firebaseFirestore.collection('complaint_history');
+    CollectionReference ref = firebaseFirestore.collection('diagnosis');
 
     await ref.add({
       'nama': username,
-      'complaint': complaint,
-      'history': history,
+      'diagnosis': diagnosis,
       'uid': uid,
       'checkid': checkid
       // Tambahkan field lain yang ingin Anda tambahkan di sini

@@ -7,14 +7,14 @@ import 'package:flutter_firebase/features/user_auth/presentation/pages/home_scre
 import 'global_name.dart'; // Mengimpor file globals.dart
 // import '/../../../../global/common/toast.dart';
 
-class Complaint extends StatefulWidget {
-  const Complaint({super.key});
+class CheckUp extends StatefulWidget {
+  const CheckUp({super.key});
 
   @override
-  State<Complaint> createState() => _ComplaintState();
+  State<CheckUp> createState() => _CheckUpState();
 }
 
-class _ComplaintState extends State<Complaint> {
+class _CheckUpState extends State<CheckUp> {
   String namaBaru = globalName;
   bool showProgress = false;
   bool visible = false;
@@ -23,8 +23,11 @@ class _ComplaintState extends State<Complaint> {
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
   final TextEditingController nama = new TextEditingController();
-  final TextEditingController patientcomplaint = new TextEditingController();
-  final TextEditingController patienthistory = new TextEditingController();
+  final TextEditingController tension = new TextEditingController();
+  final TextEditingController pulse = new TextEditingController();
+  final TextEditingController respirasi = new TextEditingController();
+  final TextEditingController temperature = new TextEditingController();
+  final TextEditingController pemeriksaan = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +77,14 @@ class _ComplaintState extends State<Complaint> {
               child: Row(
                 children: [
                   Image.asset(
-                    "assets/images/complaint.png",
+                    "assets/images/checkup.png",
                     width: 40,
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "COMPLAINT",
+                    "CHECKUP",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -101,27 +104,23 @@ class _ComplaintState extends State<Complaint> {
                   // PATIENT COMPLAINT
                   //
                   //
-
                   Text(
-                    "Patient Complaint",
+                    "Tension",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   SizedBox(
-                    height: 200,
                     // <-- TextField height
                     child: TextFormField(
-                      controller: patientcomplaint,
+                      controller: tension,
                       maxLines: null,
-                      expands: true,
-                      keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
-                        fillColor: kuning,
+                        fillColor: merah,
                         filled: true,
-                        hintText: 'Enter a message',
+                        hintText: 'Masukan Tensi',
                       ),
                       onSaved: (value) {
-                        patientcomplaint.text = value!;
+                        tension.text = value!;
                       },
                       onChanged: (value) {},
                     ),
@@ -129,8 +128,103 @@ class _ComplaintState extends State<Complaint> {
                   SizedBox(
                     height: 15,
                   ),
+                  //
+                  //
                   Text(
-                    "Patient History",
+                    "Pulse",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    // <-- TextField height
+                    child: TextFormField(
+                      controller: pulse,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        fillColor: biru,
+                        filled: true,
+                        hintText: 'Masukan Pulse',
+                      ),
+                      onSaved: (value) {
+                        pulse.text = value!;
+                      },
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  //
+                  //
+                  //
+                  //
+                  //
+                  Text(
+                    "Respirasi",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    // <-- TextField height
+                    child: TextFormField(
+                      controller: respirasi,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        fillColor: kuning,
+                        filled: true,
+                        hintText: 'Masukan Respirasi',
+                      ),
+                      onSaved: (value) {
+                        respirasi.text = value!;
+                      },
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  //
+                  //
+                  //
+                  //
+                  //
+                  Text(
+                    "Temperature",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  SizedBox(
+                    // <-- TextField height
+                    child: TextFormField(
+                      controller: temperature,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        fillColor: pink,
+                        filled: true,
+                        hintText: 'Masukan Temperature',
+                      ),
+                      onSaved: (value) {
+                        temperature.text = value!;
+                      },
+                      onChanged: (value) {},
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  //
+                  Text(
+                    "Pemeriksaan",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
@@ -139,17 +233,17 @@ class _ComplaintState extends State<Complaint> {
                     child: SizedBox(
                       height: 200, // <-- TextField height
                       child: TextFormField(
-                        controller: patienthistory,
+                        controller: pemeriksaan,
                         maxLines: null,
                         expands: true,
                         keyboardType: TextInputType.multiline,
                         decoration: InputDecoration(
-                          fillColor: kuning,
+                          fillColor: Color(0xffF4F1DA),
                           filled: true,
-                          hintText: 'Enter a message',
+                          hintText: 'Hasil Pemeriksaan',
                         ),
                         onSaved: (value) {
-                          patienthistory.text = value!;
+                          pemeriksaan.text = value!;
                         },
                         onChanged: (value) {},
                       ),
@@ -187,8 +281,15 @@ class _ComplaintState extends State<Complaint> {
                           setState(() {
                             showProgress = true;
                           });
-                          addDataToFirestore(namaBaru, patientcomplaint.text,
-                              patienthistory.text, uid, checkid);
+                          addDataToFirestore(
+                              namaBaru,
+                              tension.text,
+                              pulse.text,
+                              respirasi.text,
+                              temperature.text,
+                              pemeriksaan.text,
+                              checkid,
+                              uid);
                         },
                         child: Text(
                           "Save",
@@ -210,17 +311,27 @@ class _ComplaintState extends State<Complaint> {
     ));
   }
 
-  void addDataToFirestore(String username, String complaint, String history,
-      String uid, String checkid) async {
+  void addDataToFirestore(
+      String username,
+      String tension,
+      String pulse,
+      String respirasi,
+      String temperature,
+      String pemeriksaan,
+      String checkid,
+      String uid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    CollectionReference ref = firebaseFirestore.collection('complaint_history');
+    CollectionReference ref = firebaseFirestore.collection('checkup');
 
     await ref.add({
       'nama': username,
-      'complaint': complaint,
-      'history': history,
-      'uid': uid,
-      'checkid': checkid
+      'tension': tension,
+      'pulse': pulse,
+      'respirasi': respirasi,
+      'temperature': temperature,
+      'pemeriksaan': pemeriksaan,
+      'checkid': checkid,
+      'uid': uid
       // Tambahkan field lain yang ingin Anda tambahkan di sini
     }).then((value) {
       print('Data added successfully!');

@@ -7,14 +7,14 @@ import 'package:flutter_firebase/features/user_auth/presentation/pages/home_scre
 import 'global_name.dart'; // Mengimpor file globals.dart
 // import '/../../../../global/common/toast.dart';
 
-class Complaint extends StatefulWidget {
-  const Complaint({super.key});
+class Prescription extends StatefulWidget {
+  const Prescription({super.key});
 
   @override
-  State<Complaint> createState() => _ComplaintState();
+  State<Prescription> createState() => _PrescriptionState();
 }
 
-class _ComplaintState extends State<Complaint> {
+class _PrescriptionState extends State<Prescription> {
   String namaBaru = globalName;
   bool showProgress = false;
   bool visible = false;
@@ -23,8 +23,7 @@ class _ComplaintState extends State<Complaint> {
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
   final TextEditingController nama = new TextEditingController();
-  final TextEditingController patientcomplaint = new TextEditingController();
-  final TextEditingController patienthistory = new TextEditingController();
+  final TextEditingController prescription = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +73,14 @@ class _ComplaintState extends State<Complaint> {
               child: Row(
                 children: [
                   Image.asset(
-                    "assets/images/complaint.png",
+                    "assets/images/prescription.png",
                     width: 40,
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "COMPLAINT",
+                    "PRESCRIPTION",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -89,7 +88,7 @@ class _ComplaintState extends State<Complaint> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 18, right: 18, top: 25),
+            padding: EdgeInsets.only(left: 18, right: 18, top: 65),
             // decoration: BoxDecoration(
             //   border: Border.all(color: Color.fromARGB(255, 0, 0, 0), width: 1),
             // ),
@@ -103,58 +102,30 @@ class _ComplaintState extends State<Complaint> {
                   //
 
                   Text(
-                    "Patient Complaint",
+                    "Patient prescription",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   SizedBox(
-                    height: 200,
+                    height: 300,
                     // <-- TextField height
                     child: TextFormField(
-                      controller: patientcomplaint,
+                      controller: prescription,
                       maxLines: null,
                       expands: true,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
-                        fillColor: kuning,
+                        fillColor: biru,
                         filled: true,
                         hintText: 'Enter a message',
                       ),
                       onSaved: (value) {
-                        patientcomplaint.text = value!;
+                        prescription.text = value!;
                       },
                       onChanged: (value) {},
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Patient History",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      height: 200, // <-- TextField height
-                      child: TextFormField(
-                        controller: patienthistory,
-                        maxLines: null,
-                        expands: true,
-                        keyboardType: TextInputType.multiline,
-                        decoration: InputDecoration(
-                          fillColor: kuning,
-                          filled: true,
-                          hintText: 'Enter a message',
-                        ),
-                        onSaved: (value) {
-                          patienthistory.text = value!;
-                        },
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ),
+
                   SizedBox(
                     height: 30,
                   ),
@@ -187,8 +158,8 @@ class _ComplaintState extends State<Complaint> {
                           setState(() {
                             showProgress = true;
                           });
-                          addDataToFirestore(namaBaru, patientcomplaint.text,
-                              patienthistory.text, uid, checkid);
+                          addDataToFirestore(
+                              namaBaru, prescription.text, uid, checkid);
                         },
                         child: Text(
                           "Save",
@@ -210,15 +181,14 @@ class _ComplaintState extends State<Complaint> {
     ));
   }
 
-  void addDataToFirestore(String username, String complaint, String history,
-      String uid, String checkid) async {
+  void addDataToFirestore(
+      String username, String prescription, String uid, String checkid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    CollectionReference ref = firebaseFirestore.collection('complaint_history');
+    CollectionReference ref = firebaseFirestore.collection('prescription');
 
     await ref.add({
       'nama': username,
-      'complaint': complaint,
-      'history': history,
+      'prescription': prescription,
       'uid': uid,
       'checkid': checkid
       // Tambahkan field lain yang ingin Anda tambahkan di sini

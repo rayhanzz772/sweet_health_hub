@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/constants.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/complaint.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/global_name.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/prescription.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/checkuppatient.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/complaint_patient.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/diagnosis_patient.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/prescription_patient.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/login_page.dart';
 
 String globalid = '';
+String checkiddatabase = 'none';
+bool idEntered = false;
 
 class HomeScreenPatient extends StatelessWidget {
   @override
@@ -28,8 +34,17 @@ class MyForm extends StatefulWidget {
 class _Patient extends State<MyForm> {
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
-      backgroundColor: Color(0xff5aaca2),
+      backgroundColor: Color.fromRGBO(138, 196, 189, 71),
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8, bottom: 8),
+        child: Image.asset(
+          'assets/images/logo.png', // Ganti dengan path gambar Anda
+          width: 50, // Sesuaikan lebar gambar
+          height: 50, // Sesuaikan tinggi gambar
+        ),
+      ),
       title: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text("Sweet Health Hub"),
@@ -39,10 +54,13 @@ class _Patient extends State<MyForm> {
           padding: EdgeInsets.only(right: 10),
           child: Row(
             children: [
-              Icon(
-                Icons.notifications_none,
-                size: 30,
-                color: Colors.grey, // Change to LightColor.grey if needed
+              IconButton(
+                onPressed: () {
+                  logout(context);
+                },
+                icon: Icon(
+                  Icons.logout,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0), // Add padding here
@@ -162,6 +180,57 @@ class _Patient extends State<MyForm> {
                           }
                         },
                       ),
+                      //
+                      //
+                      //
+                      //
+                      //
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection("checkid")
+                            .where('nama', isEqualTo: nama)
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // Menampilkan indikator loading jika data masih dimuat
+                          } else if (snapshot.hasError) {
+                            return Text(
+                                'Error: ${snapshot.error}'); // Menampilkan pesan error jika terjadi kesalahan
+                          } else {
+                            List<Widget> clientWidgets =
+                                []; // List untuk menampung widget yang akan ditampilkan
+                            final clients = snapshot.data?.docs.toList();
+
+                            if (clients != null) {
+                              for (var complaintHistory in clients) {
+                                // Ubah bagian ini sesuai dengan struktur data di Firestore Anda
+                                checkiddatabase = complaintHistory['checkid'];
+
+                                // Tambahkan widget ke dalam list clientWidgets
+                                clientWidgets.add(Column(
+                                  children: [],
+                                ));
+                              }
+                            }
+
+                            return Column(
+                              children:
+                                  clientWidgets, // Tampilkan widget yang telah ditambahkan ke dalam Column
+                            );
+                          }
+                        },
+                      ),
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //
+                      //
+
                       Container(
                         padding: EdgeInsets.only(left: 18, right: 18, top: 10),
                         child: Column(
@@ -187,23 +256,46 @@ class _Patient extends State<MyForm> {
                                 setState(() {
                                   globalid = checkidcontroller.text;
                                 });
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Cek ID Tersimpan"),
-                                      content: Text("ID telah tersimpan."),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: Text("OK"),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+
+                                if (globalid == checkiddatabase) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Cek ID Tersimpan"),
+                                        content: Text("ID telah tersimpan."),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  idEntered = true;
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("ERROR"),
+                                        content:
+                                            Text("ID TIDAK ADA DI DATABASE"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               color: Colors.blue[900],
                               child: Text(
@@ -252,14 +344,16 @@ class _Patient extends State<MyForm> {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ComplaintPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
-                                    );
-                                  },
+                                  onTap: idEntered
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ComplaintPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                          );
+                                        }
+                                      : null,
                                   child: Row(
                                     children: [
                                       Container(
@@ -323,14 +417,16 @@ class _Patient extends State<MyForm> {
                                   width: 10,
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
-                                    );
-                                  },
+                                  onTap: idEntered
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CheckUpPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                          );
+                                        }
+                                      : null,
                                   child: Row(
                                     children: [
                                       Container(
@@ -416,14 +512,16 @@ class _Patient extends State<MyForm> {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
-                                    );
-                                  },
+                                  onTap: idEntered
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DiagnosisPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                          );
+                                        }
+                                      : null,
                                   child: Row(
                                     children: [
                                       Container(
@@ -487,14 +585,16 @@ class _Patient extends State<MyForm> {
                                   width: 10,
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
-                                    );
-                                  },
+                                  onTap: idEntered
+                                      ? () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PrescriptionPatient()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                          );
+                                        }
+                                      : null,
                                   child: Row(
                                     children: [
                                       Container(
@@ -562,15 +662,6 @@ class _Patient extends State<MyForm> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          logout(context);
-                        },
-                        icon: Icon(
-                          Icons.logout,
-                        ),
-                      )
-
                       //
                       ///
                       ///

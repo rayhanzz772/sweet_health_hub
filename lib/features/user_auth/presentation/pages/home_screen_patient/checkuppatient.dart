@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/constants.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/HomeScreenAdmin.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/HomeScreenPatient.dart';
 import 'checkid_patient.dart';
@@ -9,18 +10,23 @@ import 'checkid_patient.dart';
 // import 'global_name.dart'; // Mengimpor file globals.dart
 // import '/../../../../global/common/toast.dart';
 
-class ComplaintPatient extends StatefulWidget {
-  const ComplaintPatient({super.key});
+class CheckUpPatient extends StatefulWidget {
+  const CheckUpPatient({super.key});
 
   @override
-  State<ComplaintPatient> createState() => _ComplaintPatientState();
+  State<CheckUpPatient> createState() => _CheckUpPatientState();
 }
 
-class _ComplaintPatientState extends State<ComplaintPatient> {
+class _CheckUpPatientState extends State<CheckUpPatient> {
   String idBaru = globalid;
   String nama = '';
-  String complaint = '';
-  String history = '';
+
+  String tension = '';
+  String pulse = '';
+  String respirasi = '';
+  String temperature = '';
+  String pemeriksaan = '';
+
   bool showProgress = false;
   bool visible = false;
   String uid = '';
@@ -30,8 +36,11 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
 
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
-  final TextEditingController patientcomplaint = new TextEditingController();
-  final TextEditingController patienthistory = new TextEditingController();
+  final TextEditingController patienttension = new TextEditingController();
+  final TextEditingController patientpulse = new TextEditingController();
+  final TextEditingController patientrespirasi = new TextEditingController();
+  final TextEditingController patienttemperature = new TextEditingController();
+  final TextEditingController patientpemeriksaan = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
         children: [
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection("complaint_history")
+                .collection("checkup")
                 .where('uid', isEqualTo: currentUser.currentUser!.uid)
                 .where('checkid', isEqualTo: idBaru)
                 .limit(1) // Memuat hanya satu dokumen (data terakhir)
@@ -62,9 +71,11 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                 if (clients != null) {
                   for (var complaintHistory in clients) {
                     // Ubah bagian ini sesuai dengan struktur data di Firestore Anda
-                    complaint = complaintHistory['complaint'];
-                    history = complaintHistory['history'];
-                    nama = complaintHistory['nama'];
+                    tension = complaintHistory['tension'];
+                    pulse = complaintHistory['pulse'];
+                    respirasi = complaintHistory['respirasi'];
+                    temperature = complaintHistory['temperature'];
+                    pemeriksaan = complaintHistory['pemeriksaan'];
 
                     // Tambahkan widget ke dalam list clientWidgets
                     clientWidgets.add(Column(
@@ -110,36 +121,131 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
                                 Text(
-                                  "Patient Complaint",
+                                  "Tension",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(height: 10),
                                 SizedBox(
-                                  height: 200,
                                   // <-- TextField height
                                   child: TextFormField(
                                     enabled: false,
-                                    controller: patientcomplaint,
                                     maxLines: null,
-                                    expands: true,
-                                    keyboardType: TextInputType.multiline,
                                     decoration: InputDecoration(
-                                      fillColor: Color(0xffF4F1DA),
+                                      fillColor: merah,
                                       filled: true,
-                                      hintText: '$complaint',
+                                      hintText: '$tension',
                                     ),
-                                    onSaved: (value) {
-                                      patientcomplaint.text = value!;
-                                    },
                                     onChanged: (value) {},
                                   ),
                                 ),
                                 SizedBox(
                                   height: 15,
                                 ),
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                Text(
+                                  "Pulse",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  // <-- TextField height
+                                  child: TextFormField(
+                                    enabled: false,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      fillColor: merah,
+                                      filled: true,
+                                      hintText: '$pulse',
+                                    ),
+                                    onChanged: (value) {},
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                Text(
+                                  "Respirasi",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  // <-- TextField height
+                                  child: TextFormField(
+                                    enabled: false,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      fillColor: merah,
+                                      filled: true,
+                                      hintText: '$respirasi',
+                                    ),
+                                    onChanged: (value) {},
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                Text(
+                                  "Temperature",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  // <-- TextField height
+                                  child: TextFormField(
+                                    enabled: false,
+                                    maxLines: null,
+                                    decoration: InputDecoration(
+                                      fillColor: merah,
+                                      filled: true,
+                                      hintText: '$temperature',
+                                    ),
+                                    onChanged: (value) {},
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+
                                 Text(
                                   "Patient History",
                                   style: TextStyle(
@@ -153,22 +259,30 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                                     height: 200, // <-- TextField height
                                     child: TextFormField(
                                       enabled: false,
-                                      controller: patienthistory,
                                       maxLines: null,
                                       expands: true,
                                       keyboardType: TextInputType.multiline,
                                       decoration: InputDecoration(
                                         fillColor: Color(0xffF4F1DA),
                                         filled: true,
-                                        hintText: '$history',
+                                        hintText: '$pemeriksaan',
                                       ),
-                                      onSaved: (value) {
-                                        patienthistory.text = value!;
-                                      },
                                       onChanged: (value) {},
                                     ),
                                   ),
                                 ),
+
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //
+
                                 SizedBox(
                                   height: 30,
                                 ),

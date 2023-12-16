@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/constants.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/complaint.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/checkup.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/diagnosis.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/global_name.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/prescription.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/login_page.dart';
 
 class HomeScreenAdmin extends StatelessWidget {
@@ -10,8 +13,17 @@ class HomeScreenAdmin extends StatelessWidget {
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
-      backgroundColor: Color(0xff5aaca2),
+      backgroundColor: Color.fromRGBO(138, 196, 189, 71),
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8, bottom: 8),
+        child: Image.asset(
+          'assets/images/logo.png', // Ganti dengan path gambar Anda
+          width: 50, // Sesuaikan lebar gambar
+          height: 50, // Sesuaikan tinggi gambar
+        ),
+      ),
       title: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text("Sweet Health Hub"),
@@ -21,10 +33,13 @@ class HomeScreenAdmin extends StatelessWidget {
           padding: EdgeInsets.only(right: 10),
           child: Row(
             children: [
-              Icon(
-                Icons.notifications_none,
-                size: 30,
-                color: Colors.grey, // Change to LightColor.grey if needed
+              IconButton(
+                onPressed: () {
+                  logout(context);
+                },
+                icon: Icon(
+                  Icons.logout,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0), // Add padding here
@@ -86,7 +101,7 @@ class HomeScreenAdmin extends StatelessWidget {
                                                   child: Row(
                                                     children: [
                                                       Text(
-                                                        'Halo, Admin',
+                                                        'Halo, Dokter',
                                                         style: TextStyle(
                                                             fontSize: 24,
                                                             fontWeight:
@@ -205,7 +220,7 @@ class HomeScreenAdmin extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                              CheckUp()), // Ganti DetailPage() dengan halaman tujuan Anda
                                     );
                                   },
                                   child: Row(
@@ -298,7 +313,7 @@ class HomeScreenAdmin extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                              Diagnosis()), // Ganti DetailPage() dengan halaman tujuan Anda
                                     );
                                   },
                                   child: Row(
@@ -369,7 +384,7 @@ class HomeScreenAdmin extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Complaint()), // Ganti DetailPage() dengan halaman tujuan Anda
+                                              Prescription()), // Ganti DetailPage() dengan halaman tujuan Anda
                                     );
                                   },
                                   child: Row(
@@ -439,14 +454,6 @@ class HomeScreenAdmin extends StatelessWidget {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          logout(context);
-                        },
-                        icon: Icon(
-                          Icons.logout,
-                        ),
-                      )
 
                       //
                       ///

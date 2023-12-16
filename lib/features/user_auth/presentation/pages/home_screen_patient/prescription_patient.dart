@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/constants.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/HomeScreenAdmin.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/HomeScreenPatient.dart';
 import 'checkid_patient.dart';
@@ -9,18 +10,19 @@ import 'checkid_patient.dart';
 // import 'global_name.dart'; // Mengimpor file globals.dart
 // import '/../../../../global/common/toast.dart';
 
-class ComplaintPatient extends StatefulWidget {
-  const ComplaintPatient({super.key});
+class PrescriptionPatient extends StatefulWidget {
+  const PrescriptionPatient({super.key});
 
   @override
-  State<ComplaintPatient> createState() => _ComplaintPatientState();
+  State<PrescriptionPatient> createState() => _PrescriptionPatientState();
 }
 
-class _ComplaintPatientState extends State<ComplaintPatient> {
+class _PrescriptionPatientState extends State<PrescriptionPatient> {
   String idBaru = globalid;
   String nama = '';
-  String complaint = '';
-  String history = '';
+
+  String prescription = '';
+
   bool showProgress = false;
   bool visible = false;
   String uid = '';
@@ -30,8 +32,7 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
 
   // final _formkey = GlobalKey<FormState>();
   // final _auth = FirebaseAuth.instance;
-  final TextEditingController patientcomplaint = new TextEditingController();
-  final TextEditingController patienthistory = new TextEditingController();
+  final TextEditingController patientprescription = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
         children: [
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection("complaint_history")
+                .collection("prescription")
                 .where('uid', isEqualTo: currentUser.currentUser!.uid)
                 .where('checkid', isEqualTo: idBaru)
                 .limit(1) // Memuat hanya satu dokumen (data terakhir)
@@ -62,8 +63,7 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                 if (clients != null) {
                   for (var complaintHistory in clients) {
                     // Ubah bagian ini sesuai dengan struktur data di Firestore Anda
-                    complaint = complaintHistory['complaint'];
-                    history = complaintHistory['history'];
+                    prescription = complaintHistory['prescription'];
                     nama = complaintHistory['nama'];
 
                     // Tambahkan widget ke dalam list clientWidgets
@@ -83,14 +83,14 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                             child: Row(
                               children: [
                                 Image.asset(
-                                  "assets/images/complaint.png",
+                                  "assets/images/prescription.png",
                                   width: 40,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  "COMPLAINT",
+                                  "PRESCRIPTION",
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
@@ -111,7 +111,7 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Patient Complaint",
+                                  "PATIENT PRESCRIPTION",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
@@ -122,51 +122,15 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                                   // <-- TextField height
                                   child: TextFormField(
                                     enabled: false,
-                                    controller: patientcomplaint,
                                     maxLines: null,
                                     expands: true,
                                     keyboardType: TextInputType.multiline,
                                     decoration: InputDecoration(
-                                      fillColor: Color(0xffF4F1DA),
+                                      fillColor: biru,
                                       filled: true,
-                                      hintText: '$complaint',
+                                      hintText: '$prescription',
                                     ),
-                                    onSaved: (value) {
-                                      patientcomplaint.text = value!;
-                                    },
                                     onChanged: (value) {},
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "Patient History",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: SizedBox(
-                                    height: 200, // <-- TextField height
-                                    child: TextFormField(
-                                      enabled: false,
-                                      controller: patienthistory,
-                                      maxLines: null,
-                                      expands: true,
-                                      keyboardType: TextInputType.multiline,
-                                      decoration: InputDecoration(
-                                        fillColor: Color(0xffF4F1DA),
-                                        filled: true,
-                                        hintText: '$history',
-                                      ),
-                                      onSaved: (value) {
-                                        patienthistory.text = value!;
-                                      },
-                                      onChanged: (value) {},
-                                    ),
                                   ),
                                 ),
                                 SizedBox(

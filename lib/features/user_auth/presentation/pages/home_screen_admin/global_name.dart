@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/HomeScreenAdmin.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/complaint.dart';
 
 // Variabel global untuk menyimpan nama
 String globalName = '';
+String checkid = '';
 
 void main() {
   runApp(GlobalName());
@@ -29,7 +31,9 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
+  bool showProgress = false;
   TextEditingController nameController = TextEditingController();
+  TextEditingController checkidcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +49,23 @@ class _MyFormState extends State<MyForm> {
             ),
           ),
           SizedBox(height: 20),
+          TextField(
+            controller: checkidcontroller,
+            decoration: InputDecoration(
+              hintText: 'Masukan Check id',
+            ),
+          ),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               setState(() {
-                globalName =
-                    nameController.text; // Memasukkan nilai ke variabel global
+                globalName = nameController.text;
+                checkid = checkidcontroller.text;
               });
+              setState(() {
+                showProgress = true;
+              });
+              addDataToFirestore(globalName, checkid);
               // Navigasi ke halaman selanjutnya di sini
               Navigator.push(
                 context,
@@ -65,5 +80,22 @@ class _MyFormState extends State<MyForm> {
         ],
       ),
     );
+  }
+
+  void addDataToFirestore(String username, String checkid) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    CollectionReference ref = firebaseFirestore.collection('checkid');
+
+    await ref.add({
+      'nama': username,
+      'checkid': checkid
+      // Tambahkan field lain yang ingin Anda tambahkan di sini
+    }).then((value) {
+      print('Data added successfully!');
+    }).catchError((error) {
+      print('Failed to add data: $error');
+    });
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomeScreenAdmin()));
   }
 }
