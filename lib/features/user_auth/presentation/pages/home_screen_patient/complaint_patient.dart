@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/HomeScreenAdmin.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_admin/global_name.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/HomeScreenPatient.dart';
 import 'checkid_patient.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -17,6 +18,7 @@ class ComplaintPatient extends StatefulWidget {
 }
 
 class _ComplaintPatientState extends State<ComplaintPatient> {
+  bool kondisi = false;
   String idBaru = globalid;
   String nama = '';
   String complaint = '';
@@ -35,6 +37,35 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (globalid == globalid) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Alert Dialog Title'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('This is a demo alert dialog.'),
+                    Text('Would you like to approve of this message?'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+      // Tampilkan AlertDialog pada saat aplikasi dijalankan
+    });
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -203,7 +234,6 @@ class _ComplaintPatientState extends State<ComplaintPatient> {
                     ));
                   }
                 }
-
                 return Column(
                   children:
                       clientWidgets, // Tampilkan widget yang telah ditambahkan ke dalam Column

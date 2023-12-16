@@ -32,6 +32,7 @@ class MyForm extends StatefulWidget {
 }
 
 class _Patient extends State<MyForm> {
+  List<String> checkIdList = [];
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -84,8 +85,10 @@ class _Patient extends State<MyForm> {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final currentUser = FirebaseAuth.instance;
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    String uid = currentUser.currentUser!.uid;
     double kWidth = MediaQuery.of(context).size.width * 0.44;
     double kWidth2 = MediaQuery.of(context).size.width * 0.95;
+
     // double kButtonWidth = MediaQuery.of(context).size.width * 0.892;
     return Scaffold(
       appBar: PreferredSize(
@@ -185,6 +188,7 @@ class _Patient extends State<MyForm> {
                       //
                       //
                       //
+                      //
                       StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection("checkid")
@@ -228,11 +232,8 @@ class _Patient extends State<MyForm> {
                       //
                       //
                       //
-                      //
-                      //
 
                       Container(
-                        decoration: BoxDecoration(color: Colors.red),
                         padding: EdgeInsets.only(left: 18, right: 18, top: 10),
                         child: Column(
                           children: [
@@ -269,8 +270,7 @@ class _Patient extends State<MyForm> {
                                 setState(() {
                                   globalid = checkidcontroller.text;
                                 });
-
-                                if (globalid == checkiddatabase) {
+                                if (globalid == '$checkiddatabase') {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -295,8 +295,8 @@ class _Patient extends State<MyForm> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: Text("ERROR"),
-                                        content:
-                                            Text("ID TIDAK ADA DI DATABASE"),
+                                        content: Text(
+                                            "DATA TIDAK ADA ATAU KADALUARSA"),
                                         actions: <Widget>[
                                           TextButton(
                                             child: Text("OK"),
@@ -308,6 +308,7 @@ class _Patient extends State<MyForm> {
                                       );
                                     },
                                   );
+                                  idEntered = false;
                                 }
                               },
                               color: hijau,
