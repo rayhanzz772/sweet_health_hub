@@ -4,6 +4,7 @@ const kuning = Color(0xffF4F1DA);
 const merah = Color(0xfff4d4d4);
 const pink = Color(0xfff4dad0);
 const biru = Color(0xffC1Daeb);
+const hijau = Color(0xff5aaca2);
 
 const kPrimaryColor = Color.fromRGBO(66, 187, 255, 1);
 const kPrimaryLightColor = Color.fromARGB(255, 237, 237, 237);

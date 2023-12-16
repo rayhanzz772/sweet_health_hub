@@ -232,25 +232,38 @@ class _Patient extends State<MyForm> {
                       //
 
                       Container(
+                        decoration: BoxDecoration(color: Colors.red),
                         padding: EdgeInsets.only(left: 18, right: 18, top: 10),
                         child: Column(
                           children: [
-                            TextField(
+                            TextFormField(
                               controller: checkidcontroller,
                               decoration: InputDecoration(
                                 fillColor: Color(0xffF4F1DA),
                                 filled: true,
                                 hintText: 'Masukan Check id',
+                                contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 8.0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: new BorderSide(
+                                      color: const Color.fromARGB(
+                                          255, 50, 50, 50)),
+                                  borderRadius: new BorderRadius.circular(10),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: new BorderSide(color: kuning),
+                                  borderRadius: new BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                             SizedBox(height: 20),
                             MaterialButton(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(20.0),
+                                  Radius.circular(10.0),
                                 ),
                               ),
-                              elevation: 5.0,
+                              elevation: 0,
                               height: 40,
                               onPressed: () {
                                 setState(() {
@@ -297,7 +310,7 @@ class _Patient extends State<MyForm> {
                                   );
                                 }
                               },
-                              color: Colors.blue[900],
+                              color: hijau,
                               child: Text(
                                 "Save",
                                 style: TextStyle(
