@@ -42,28 +42,22 @@ class _Patient extends State<MyForm> {
       leading: Padding(
         padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8, bottom: 8),
         child: Image.asset(
-          'assets/images/logo.png', // Ganti dengan path gambar Anda
+          'assets/images/logobaru.png', // Ganti dengan path gambar Anda
           width: 50, // Sesuaikan lebar gambar
           height: 50, // Sesuaikan tinggi gambar
         ),
       ),
       title: Padding(
         padding: const EdgeInsets.only(left: 0),
-        child: Text("Sweet Health Hub"),
+        child: Text(
+          "Sweet Health Hub",
+        ),
       ),
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.only(right: 10),
           child: Row(
             children: [
-              IconButton(
-                onPressed: () {
-                  logout(context);
-                },
-                icon: Icon(
-                  Icons.logout,
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0), // Add padding here
                 child: ClipRRect(
