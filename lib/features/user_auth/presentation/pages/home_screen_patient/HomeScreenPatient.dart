@@ -9,6 +9,7 @@ import 'package:flutter_firebase/features/user_auth/presentation/pages/home_scre
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/complaint_patient.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/diagnosis_patient.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/prescription_patient.dart';
+import 'package:flutter_firebase/features/user_auth/presentation/pages/home_screen_patient/profile_page.dart';
 import 'package:flutter_firebase/features/user_auth/presentation/pages/login_page.dart';
 
 String globalid = '';
@@ -755,6 +756,82 @@ class _Patient extends State<MyForm> {
                         ),
                       ),
                       //
+                      SizedBox(
+                        height: 120,
+                      ),
+                      Center(
+                          child: Container(
+                        margin: EdgeInsets.only(left: 18, right: 18),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: hijau,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // Logika yang ingin dijalankan saat gambar ditekan
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Konfirmasi'),
+                                      content:
+                                          Text('Anda yakin ingin melanjutkan?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context)
+                                                .pop(); // Tutup dialog saat tombol "Batal" ditekan
+                                          },
+                                          child: Text('Batal'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // Lakukan tindakan lanjutan saat tombol "Lanjutkan" ditekan
+                                            // Misalnya, Anda bisa menambahkan logika untuk melanjutkan ke layar berikutnya
+                                            // Di sini, kami hanya menutup dialog
+                                            logout(context);
+                                          },
+                                          child: Text('Lanjutkan'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                child: Image.asset(
+                                  "assets/images/home.png", // Ganti dengan path gambar Anda
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // Arahkan navigasi ke halaman menu profil saat widget ditekan
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserProfilePage()),
+                                );
+                              },
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                child: Image.asset(
+                                  "assets/images/profile.png", // Ganti dengan path gambar Anda
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+
                       ///
                       ///
                       ///
