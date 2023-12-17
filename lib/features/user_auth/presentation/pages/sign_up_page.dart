@@ -235,6 +235,13 @@ class _RegisterState extends State<Register> {
                               elevation: 5.0,
                               height: 40,
                               onPressed: () {
+                                setState(() {
+                                  showProgress = true;
+                                });
+                                signUp(emailController.text,
+                                    passwordController.text, 'Patient');
+                                postDetailsToFirestore(
+                                    emailController.text, 'Patient');
                                 CircularProgressIndicator();
                                 Navigator.push(
                                   context,
@@ -287,7 +294,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  postDetailsToFirestore(String email, String role) async {
+  postDetailsToFirestore(String email, String rool) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
@@ -295,7 +302,7 @@ class _RegisterState extends State<Register> {
       'username': usernameController.text,
       'email': emailController.text,
       'uid': user.uid, // Menyimpan UID pengguna ke dalam Firestore
-      'role': role, // Misalnya, disimpan juga peran pengguna
+      'rool': rool, // Misalnya, disimpan juga peran pengguna
     });
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => LoginPage()));

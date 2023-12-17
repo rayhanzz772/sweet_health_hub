@@ -192,7 +192,14 @@ class _Patient extends State<MyForm> {
                       StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection("checkid")
-                            .where('nama', isEqualTo: nama)
+                            .orderBy("waktu",
+                                descending:
+                                    true) // Urutkan berdasarkan timestamp descending
+                            .where('nama',
+                                isEqualTo:
+                                    nama) // Filter data berdasarkan field 'nama'
+                            .limit(
+                                1) // Ambil hanya 1 dokumen (yang memiliki timestamp terbaru)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -232,7 +239,7 @@ class _Patient extends State<MyForm> {
                       //
                       //
                       //
-
+                      // Text('$checkiddatabase'),
                       Container(
                         padding: EdgeInsets.only(left: 18, right: 18, top: 10),
                         child: Container(

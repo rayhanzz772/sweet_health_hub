@@ -475,11 +475,12 @@ class HomeScreenAdmin extends StatelessWidget {
   Future<void> logout(BuildContext context) async {
     CircularProgressIndicator();
     await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => LoginPage(),
       ),
+      (route) => false,
     );
   }
 }

@@ -85,10 +85,15 @@ class _MyFormState extends State<MyForm> {
   void addDataToFirestore(String username, String checkid) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     CollectionReference ref = firebaseFirestore.collection('checkid');
+    DateTime currentTime = DateTime.now();
+
+    // Mengonversi waktu ke tipe data Timestamp
+    Timestamp timestamp = Timestamp.fromDate(currentTime);
 
     await ref.add({
       'nama': username,
-      'checkid': checkid
+      'checkid': checkid,
+      'waktu': timestamp,
       // Tambahkan field lain yang ingin Anda tambahkan di sini
     }).then((value) {
       print('Data added successfully!');

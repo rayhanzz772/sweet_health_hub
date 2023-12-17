@@ -35,8 +35,8 @@ class _ComplaintState extends State<Complaint> {
         children: [
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection('complaint_history')
-                .where('nama', isEqualTo: namaBaru)
+                .collection('users')
+                .where('username', isEqualTo: namaBaru)
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

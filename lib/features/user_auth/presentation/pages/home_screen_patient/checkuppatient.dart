@@ -12,7 +12,6 @@ import 'checkid_patient.dart';
 
 class CheckUpPatient extends StatefulWidget {
   const CheckUpPatient({super.key});
-
   @override
   State<CheckUpPatient> createState() => _CheckUpPatientState();
 }
